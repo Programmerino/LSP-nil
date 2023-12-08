@@ -1,0 +1,174 @@
+{
+  "contributions": {
+    "settings": [
+      {
+        "file_patterns": [
+          "/LSP-nil.sublime-settings"
+        ],
+        "schema": {
+          "$id": "sublime://settings/LSP-nil",
+          "definitions": {
+            "PluginConfig": {
+              "properties": {
+                "settings": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "nil": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "formatting": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "command": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "markdownDescription": "External formatter command (with arguments).\nIt should accept file contents in stdin and print the formatted code into stdout.",
+                              "default": null,
+                              "examples": [
+                                "nixpkgs-fmt"
+                              ]
+                            }
+                          }
+                        },
+                        "diagnostics": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "ignored": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "uniqueItems": true
+                              },
+                              "default": [],
+                              "examples": [
+                                [
+                                  "unused_binding",
+                                  "unused_with"
+                                ]
+                              ],
+                              "markdownDescription": "Ignored diagnostic kinds.\nThe kind identifier is a snake_cased_string usually shown together with the diagnostic message."
+                            },
+                            "excludedFiles": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "uniqueItems": true
+                              },
+                              "default": [],
+                              "examples": [
+                                [
+                                  "Cargo.nix"
+                                ]
+                              ],
+                              "markdownDescription": "Files to exclude from showing diagnostics. Useful for generated files.\nIt accepts an array of paths. Relative paths are joined to the workspace root.\nGlob patterns are currently not supported."
+                            }
+                          }
+                        },
+                        "nix": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "binary": {
+                              "type": "string",
+                              "markdownDescription": "The path to the `nix` binary,",
+                              "default": "nix",
+                              "examples": [
+                                "/run/current-system/sw/bin/nix"
+                              ]
+                            },
+                            "maxMemoryMB": {
+                              "type": [
+                                "number",
+                                "null"
+                              ],
+                              "markdownDescription": "The heap memory limit in MiB for `nix` evaluation.\nCurrently it only applies to flake evaluation when `autoEvalInputs` is enabled, and only works for Linux. Other `nix` invocations may be also applied in the future. `null` means no limit.\nAs a reference, `nix flake show --legacy nixpkgs` usually requires about 2GiB memory.",
+                              "default": 2560,
+                              "examples": [
+                                1024
+                              ]
+                            },
+                            "flake": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "autoArchive": {
+                                  "type": [
+                                    "null",
+                                    "boolean"
+                                  ],
+                                  "markdownDescription": "Auto-archiving behavior which may use network.\n* null: Ask every time.\n* true: Automatically run `nix flake archive` when necessary.\n* false: Do not archive. Only load inputs that are already on disk.",
+                                  "default": null,
+                                  "examples": [
+                                    true
+                                  ]
+                                },
+                                "autoEvalInputs": {
+                                  "type": "boolean",
+                                  "markdownDescription": "Whether to auto-eval flake inputs.\nThe evaluation result is used to improve completion, but may cost lots of time and/or memory.",
+                                  "default": false,
+                                  "examples": [
+                                    true
+                                  ]
+                                },
+                                "nixpkgsInputName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "markdownDescription": "The input name of nixpkgs for NixOS options evaluation.\n\nThe options hierarchy is used to improve completion, but may cost lots of time and/or memory.\nIf this value is `null` or is not found in the workspace flake's inputs, NixOS options are not evaluated.",
+                                  "default": "nixpkgs",
+                                  "examples": [
+                                    "nixos"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "sublime://settings/LSP-plugin-base"
+            },
+            {
+              "$ref": "sublime://settings/LSP-nil#/definitions/PluginConfig"
+            }
+          ]
+        }
+      },
+      {
+        "file_patterns": [
+          "/*.sublime-project"
+        ],
+        "schema": {
+          "properties": {
+            "settings": {
+              "properties": {
+                "LSP": {
+                  "properties": {
+                    "LSP-nil": {
+                      "$ref": "sublime://settings/LSP-nil#/definitions/PluginConfig"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    ]
+  }
+}

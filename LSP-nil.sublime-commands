@@ -1,0 +1,31 @@
+[
+	{
+		"caption": "Preferences: LSP-nil Settings",
+		"command": "edit_settings",
+		"args": {
+			"base_file": "${packages}/LSP-nil/LSP-nil.sublime-settings",
+			"default": "// Settings in here override those in \"LSP-nil/LSP-nil.sublime-settings\"\n\n{\n\t$0\n}\n"
+		}
+	},
+	{
+		"caption": "LSP-typescript: Organize Imports",
+		"command": "lsp_typescript_execute",
+		"args": {
+			"command_name": "_typescript.organizeImports",
+			"command_args": [
+				"${file}"
+			]
+		}
+	},
+	{
+		"caption": "LSP-typescript: Goto Source Definition",
+		"command": "lsp_typescript_goto_source_definition",
+		"args": {
+			"command_name": "_typescript.goToSourceDefinition",
+			"command_args": [
+				"$file_uri",
+				"$position"
+			]
+		},
+	},
+]
